@@ -22,8 +22,8 @@ app.add_middleware(
 )
 
 
-@app.post("/segment")
-async def segment(
+@app.post("/segmentation")
+async def segmentation(
     request: Request, 
     image: UploadFile = File(...),
     prompt: str = Form(...),
