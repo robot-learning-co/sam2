@@ -7,6 +7,7 @@ from PIL import Image
 import time
 import json
 from pydantic import BaseModel
+import numpy as np
 
 predictor = SAM2ImagePredictor.from_pretrained("facebook/sam2-hiera-large")
 
@@ -48,7 +49,7 @@ async def segment(
     prompt = json.loads(prompt)
     point_coords = prompt["point_coords"] if "point_coords" in prompt else None
     point_labels = prompt["point_labels"] if "point_labels" in prompt else None
-    box = prompt["box"] if "box" in prompt else None
+    box = np.array(prompt["box"])[None, :] if "box" in prompt else None
     
     with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
         predictor.set_image(image)
