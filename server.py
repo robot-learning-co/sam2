@@ -22,7 +22,7 @@ app.add_middleware(
 )
 
 
-@app.post("/segmentation")
+@app.post("/")
 async def segmentation(
     request: Request, 
     image: UploadFile = File(...),
