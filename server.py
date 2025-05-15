@@ -21,10 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-timestamp = str(int(time.time() * 1000))
-readable_time = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime(int(timestamp) // 1000))
-output_dir = os.path.join(f"{os.getcwd()}/data/", f"{readable_time}")
-
 
 @app.post("/segment")
 async def segment(
@@ -35,6 +31,10 @@ async def segment(
     client_host = request.client.host
     user_agent = request.headers.get("user-agent", "unknown")
     referer = request.headers.get("referer", "none")
+    
+    timestamp = str(int(time.time() * 1000))
+    readable_time = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime(int(timestamp) // 1000))
+    output_dir = os.path.join(f"{os.getcwd()}/data/", f"{readable_time}")
 
     img = await image.read()
     
